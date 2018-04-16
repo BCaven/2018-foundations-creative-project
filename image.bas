@@ -1,42 +1,37 @@
-SCREEN _NEWIMAGE(640, 480, 32)
+SCREEN 12
 CLS , _RGB(0, 255, 0)
-i = _LOADIMAGE("path.png") 'see note below examples to get the image
+i = _LOADIMAGE("testmap.png") 'see note below examples to get the image
 _PUTIMAGE (0, 0), i 'places image at upper left corner of window w/o stretching it
-
+_FULLSCREEN
 LET X = 20
 LET Y = 10
-REM TESTING------------------------------------------------------------
-WHILE KEY$ <> "Q"
+' TESTING------------------------------------------------------------
+WHILE KEY$ <> ""
+    KEY$ = INKEY$
     _PUTIMAGE (0, 0), i
-    LOCATE Y, X
-    PRINT ""
-    LOCATE Y + 1, X
-    PRINT "|"
-    LOCATE Y + 1, X - 1
-    PRINT "/"
-    LOCATE Y + 1, X + 1
-    PRINT "\"
-    LOCATE Y + 2, X
-    PRINT "^"
-    20 KEY$ = INKEY$
-    IF KEY$ = "" THEN 20
-    LOCATE Y, X
-    PRINT " "
-    SELECT CASE KEY$
-        REM LEFT
-        CASE CHR$(0) + "K"
-            LET X = X - 1
-            REM RIGHT
-        CASE CHR$(0) + "M"
-            LET X = X + 1
-            REM UP
-        CASE CHR$(0) + "H"
-            LET Y = Y - 1
-            REM DOWN
-        CASE CHR$(0) + "P"
-            LET Y = Y + 1
-    END SELECT
-    LOCATE Y, X
-    PRINT ""
-WEND
+    pressed = _KEYHIT
+    IF pressed = 18432 THEN
+        Y = Y - 20
+        facing$ = "up"
+    END IF
+    IF pressed = 20480 THEN
+        Y = Y + 20
+        facing$ = "down"
+    END IF
+    IF pressed = 19200 THEN
+        X = X - 20
+        facing$ = "left"
+    END IF
+    IF pressed = 19712 THEN
+        X = X + 20
+        facing$ = "right"
+    END IF
+    CIRCLE (X, Y), 10, 1
+    PAINT (X, Y), 1
+    IF facing$ = "up" THEN LINE (X, Y)-(X, Y - 20), 16
+    IF facing$ = "down" THEN LINE (X, Y)-(X, Y + 20), 16
+    IF facing$ = "left" THEN LINE (X, Y)-(X - 20, Y), 16
+    IF facing$ = "right" THEN LINE (X, Y)-(X + 20, Y), 16
+    _DELAY 0.1
 
+WEND
