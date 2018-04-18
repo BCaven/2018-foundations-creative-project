@@ -1,10 +1,21 @@
-
+' CLEAR:Memory; reinitializes all variables and closes all files
+' ERASE: Reinitializes specific arrays (eg. ERASE ARRAY_NAME)
+' TIME$: Time of day in hh/mm/ss
+' TIMERON: Activates internal clock
+' TIMER: Time in seconds since midnight
+' MOD: Interger remainder
+' CHAIN:
+' VIEW PRINT:
 SCREEN _NEWIMAGE(640, 480, 32)
 CLS , _RGB(0, 255, 0)
 i = _LOADIMAGE("testmap.png") 'see note below examples to get the image
 menu = _LOADIMAGE("menuTest.png")
-char = _LOADIMAGE("char.png")
+
 button = _LOADIMAGE("Button.png")
+charU = _LOADIMAGE("charUP.png")
+charD = _LOADIMAGE("charDOWN.png")
+charL = _LOADIMAGE("charLEFT.png")
+charR = _LOADIMAGE("charRIGHT.png")
 _FULLSCREEN
 LET X = 20
 LET Y = 10
@@ -33,14 +44,23 @@ WHILE KEY$ <> ""
         facing$ = "right"
     END IF
     _PUTIMAGE (320 - 10, 240 - 10), button
-    _PUTIMAGE (X - 5, Y - 5), char
-    IF clicked = 1 THEN _PUTIMAGE (10, 10), button
-    IF facing$ = "up" THEN LINE (X, Y)-(X, Y - 20), 16
-    IF facing$ = "down" THEN LINE (X, Y)-(X, Y + 20), 16
-    IF facing$ = "left" THEN LINE (X, Y)-(X - 20, Y), 16
-    IF facing$ = "right" THEN LINE (X, Y)-(X + 20, Y), 16
-    IF X - 5 = 315 AND Y - 5 = 235 THEN clicked = 1
+
+    IF facing$ = "up" THEN
+        LINE (X, Y)-(X, Y - 20), 16
+        _PUTIMAGE (X - 10, Y - 10), charU
+    END IF
+    IF facing$ = "down" THEN
+        LINE (X, Y)-(X, Y + 20), 16
+        _PUTIMAGE (X - 10, Y - 10), charD
+    END IF
+    IF facing$ = "left" THEN
+        LINE (X, Y)-(X - 20, Y), 16
+        _PUTIMAGE (X - 10, Y - 10), charL
+    END IF
+    IF facing$ = "right" THEN
+        LINE (X, Y)-(X + 20, Y), 16
+        _PUTIMAGE (X - 10, Y - 10), charR
+    END IF
     _DELAY 0.1
 
 WEND
-
