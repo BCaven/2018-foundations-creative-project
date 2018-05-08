@@ -1,0 +1,223 @@
+' WORLD SELECTOR
+SCREEN _NEWIMAGE(640, 580, 32) ' screen size: 640 by 580
+load = _LOADIMAGE("load1.png")
+_PUTIMAGE (0, 0), load
+plains = _LOADIMAGE("plains.png")
+desert = _LOADIMAGE("desert.png")
+marsh = _LOADIMAGE("marsh.png")
+river = _LOADIMAGE("river.png")
+village = _LOADIMAGE("city.png")
+Rimap = _LOADIMAGE("RiverMap.png") 'see note below examples to get the image
+Plmap = _LOADIMAGE("PlainsMap.png")
+Demap = _LOADIMAGE("DesertMap.png")
+Mamap = _LOADIMAGE("MarshMap.png")
+Vimap = _LOADIMAGE("VillageMap.png")
+station = _LOADIMAGE("trainStation.png")
+menu = _LOADIMAGE("menuTest.png")
+button = _LOADIMAGE("Button.png")
+RickPat = _LOADIMAGE("rickpat.png")
+rodog = _LOADIMAGE("rodog.png")
+donald = _LOADIMAGE("donald.png")
+fiero = _LOADIMAGE("fiero.png")
+porple = _LOADIMAGE("porple.png")
+RickPatL = _LOADIMAGE("rickpatL.png")
+rodogL = _LOADIMAGE("rodogL.png")
+donaldL = _LOADIMAGE("donaldL.png")
+fieroL = _LOADIMAGE("FieroTest.png")
+porpleL = _LOADIMAGE("porpleL.png")
+RickPatR = _LOADIMAGE("rickpatR.png")
+rodogR = _LOADIMAGE("rodogR.png")
+donaldR = _LOADIMAGE("donaldR.png")
+fieroR = _LOADIMAGE("FieroTest.png")
+porpleR = _LOADIMAGE("porpleR.png")
+msg0 = _LOADIMAGE("msg0.png")
+msg1 = _LOADIMAGE("msg1.png")
+msg2 = _LOADIMAGE("msg2.png")
+msg3 = _LOADIMAGE("msg3.png")
+msg4 = _LOADIMAGE("msg4.png")
+msg5 = _LOADIMAGE("msg5.png")
+bush = _LOADIMAGE("bush.png")
+wander = _LOADIMAGE("Wanderer.png")
+'_FULLSCREEN
+CLS
+selected = 0
+world$(0) = "plains"
+world$(1) = "desert"
+world$(2) = "marsh"
+world$(3) = "river"
+world$(4) = "village"
+CLS
+selected2 = 0
+char$(0) = "rickpat"
+char$(1) = "porple"
+char$(2) = "rodog"
+char$(3) = "donald"
+char$(4) = "fiero"
+speed(0) = 2
+speed(1) = 10
+speed(2) = 15
+speed(3) = 7
+speed(4) = 5
+CLS , _RGB(0, 0, 0)
+VIEW PRINT 20 TO 25
+X = 200
+Y = 200
+clicked = 0
+PHEALTH = 100
+PSTRENGTH = 100
+_PUTIMAGE (0, 0), menu 'places image at upper left corner of window w/o stretching it
+SLEEP
+CLS 0, RGB(0, 0, 0)
+PRINT "SELECT A CHARACTER"
+PRINT "To select a world, use the [RIGHT] and [LEFT] arrow keys"
+PRINT "When you have chosen your character press [SPACE] to continue"
+PRINT "press any key to continue"
+SLEEP
+CLS
+WHILE INKEY$ <> " "
+    theymessedup2:
+    pressed = _KEYHIT
+    IF pressed = 19200 THEN
+        selected2 = selected2 - 1
+        IF selected2 = -1 THEN selected2 = 4
+    END IF
+    IF pressed = 19712 THEN
+        selected2 = selected2 + 1
+        IF selected2 = 5 THEN selected2 = 0
+    END IF
+    PRINT "Current character: " + char$(selected2)
+    IF char$(selected2) = "rickpat" THEN _PUTIMAGE (120, 40), RickPat
+    IF char$(selected2) = "porple" THEN _PUTIMAGE (120, 40), porple
+    IF char$(selected2) = "rodog" THEN _PUTIMAGE (120, 40), rodog
+    IF char$(selected2) = "donald" THEN _PUTIMAGE (120, 40), donald
+    IF char$(selected2) = "fiero" THEN _PUTIMAGE (120, 40), fiero
+
+    _DELAY 0.1
+    CLS
+WEND
+PRINT "you have chosen: " + char$(selected2)
+INPUT "do you want to change? (y/n) ", answr$
+IF answr$ = "y" THEN GOTO theymessedup2
+FOR i = 1 TO 5
+    wanderX(i) = INT(RND * 630) + 1
+    wanderY(i) = INT(RND * 470) + 1
+NEXT i
+FOR i = 1 TO 5
+    bushX(i) = INT(RND * (640 - 50)) + 1
+    bushY(i) = INT(RND * (480 - 50)) + 1
+NEXT i
+msg = 5
+count = 0
+facing$ = "right"
+WHILE KEY$ <> ""
+    KEY$ = INKEY$
+    'cls , RGB(0, 0, 0)
+    IF count = 0 THEN
+        _PUTIMAGE (0, 0), station
+    END IF
+    IF count = 0 AND Y > 480 THEN
+        Y = 0
+        _PUTIMAGE (0, 0), Plmap
+        count = 1
+    END IF
+    IF count = 1 THEN
+        _PUTIMAGE (0, 0), Plmap
+    END IF
+    IF count = 1 AND Y < 0 THEN
+        Y = 480
+        _PUTIMAGE (0, 0), station
+        count = 0
+    END IF
+    IF count = 0 AND Y < 0 THEN
+        Y = 480
+        _PUTIMAGE (0, 0), Vimap
+        count = 2
+    END IF
+    IF count = 2 THEN
+        _PUTIMAGE (0, 0), Vimap
+    END IF
+    IF count = 2 AND Y > 480 THEN
+        Y = 0
+        _PUTIMAGE (0, 0), station
+        count = 0
+    END IF
+    IF count = 0 AND X > 640 THEN
+        X = 0
+        _PUTIMAGE (0, 0), Rimap
+        count = 3
+    END IF
+    IF count = 3 AND X < 0 THEN
+        X = 640
+        _PUTIMAGE (0, 0), station
+        count = 0
+    END IF
+    IF count = 3 THEN _PUTIMAGE (0, 0), Rimap
+    IF count = 0 AND X < 0 THEN
+        X = 640
+        _PUTIMAGE (0, 0), Mamap
+        count = 4
+    END IF
+    IF count = 4 THEN _PUTIMAGE (0, 0), Mamap
+    IF count = 4 AND X > 640 THEN
+        X = 0
+        _PUTIMAGE (0, 0), station
+        count = 0
+    END IF
+    FOR i = 1 TO 10
+        _PUTIMAGE (wanderX(i), wanderY(i)), wander
+        IF X > wanderX(i) - 30 AND X < wanderX(i) + 30 AND Y > wanderY(i) - 30 AND Y < wanderY(i) + 30 THEN
+            msg = i
+        END IF
+    NEXT i
+
+    pressed = _KEYHIT
+    IF pressed = 18432 THEN
+        Y = Y - speed(selected2)
+        'facing$ = "up"
+    END IF
+    IF pressed = 20480 THEN
+        Y = Y + speed(selected2)
+        'facing$ = "down"
+    END IF
+    IF pressed = 19200 THEN
+        X = X - speed(selected2)
+        facing$ = "left"
+    END IF
+    IF pressed = 19712 THEN
+        X = X + speed(selected2)
+        facing$ = "right"
+    END IF
+    _PUTIMAGE (320, 240), button
+    IF facing$ = "left" THEN
+        IF char$(selected2) = "rickpat" THEN _PUTIMAGE (X, Y), RickPatL
+        IF char$(selected2) = "porple" THEN _PUTIMAGE (X, Y), porpleL
+        IF char$(selected2) = "rodog" THEN _PUTIMAGE (X, Y), rodogL
+        IF char$(selected2) = "donald" THEN _PUTIMAGE (X, Y), donaldL
+        IF char$(selected2) = "fiero" THEN _PUTIMAGE (X, Y), fieroL
+    END IF
+    IF facing$ = "right" THEN
+        IF char$(selected2) = "rickpat" THEN _PUTIMAGE (X, Y), RickPatR
+        IF char$(selected2) = "porple" THEN _PUTIMAGE (X, Y), porpleR
+        IF char$(selected2) = "rodog" THEN _PUTIMAGE (X, Y), rodogR
+        IF char$(selected2) = "donald" THEN _PUTIMAGE (X, Y), donaldR
+        IF char$(selected2) = "fiero" THEN _PUTIMAGE (X, Y), fieroR
+    END IF
+    IF msg = 0 THEN _PUTIMAGE (0, 480), msg0
+    IF msg = 1 THEN _PUTIMAGE (0, 480), msg1
+    IF msg = 2 THEN _PUTIMAGE (0, 480), msg2
+    IF msg = 3 THEN _PUTIMAGE (0, 480), msg3
+    IF msg = 4 THEN _PUTIMAGE (0, 480), msg4
+    IF msg = 5 THEN _PUTIMAGE (0, 480), msg5
+    IF count = 3 OR count = 1 THEN
+        FOR i = 1 TO 10
+            _PUTIMAGE (bushX(i), bushY(i)), bush
+        NEXT i
+    END IF
+
+    _DELAY 0.1
+WEND
+
+
+
+
+
