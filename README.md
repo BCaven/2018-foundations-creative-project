@@ -1,7 +1,9 @@
 # 2018-foundations-creative-project
 ## @TODO:
- - fog of war?
  - other stuff that has not been decided
+ - weapons?
+ - established special abilities?
+ - transparent players
 ## @DONE:
  - Title screen
  - choosing characters screen
@@ -9,3 +11,4 @@
 - player movement
 - player images + backgrounds
 - show map
+- different player stats
