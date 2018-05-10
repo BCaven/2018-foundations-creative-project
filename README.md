@@ -12,3 +12,5 @@
 - player images + backgrounds
 - show map
 - different player stats
+- basic missions/challenges for Plains world :D
+- swap between unlocked characters! :D
