@@ -2,6 +2,7 @@
 SCREEN _NEWIMAGE(640, 580, 32) ' screen size: 640 by 580
 load = _LOADIMAGE("load1.png")
 _PUTIMAGE (0, 0), load
+' all of da images... 0.0
 plains = _LOADIMAGE("plains.png")
 desert = _LOADIMAGE("desert.png")
 marsh = _LOADIMAGE("marsh.png")
@@ -36,28 +37,21 @@ msg2 = _LOADIMAGE("msg2.png")
 msg3 = _LOADIMAGE("msg3.png")
 msg4 = _LOADIMAGE("msg4.png")
 msg5 = _LOADIMAGE("msg5.png")
+msg6 = _LOADIMAGE("msg6.png")
 bush = _LOADIMAGE("bush.png")
 wander = _LOADIMAGE("Wanderer.png")
 '_FULLSCREEN
-CLS
-selected = 0
-world$(0) = "plains"
-world$(1) = "desert"
-world$(2) = "marsh"
-world$(3) = "river"
-world$(4) = "village"
-CLS
 selected2 = 0
 char$(0) = "rickpat"
 char$(1) = "porple"
 char$(2) = "rodog"
 char$(3) = "donald"
 char$(4) = "fiero"
-speed(0) = 2
-speed(1) = 10
-speed(2) = 15
-speed(3) = 7
-speed(4) = 5
+speed(0) = 2 'rickpat speed
+speed(1) = 10 'porple speed
+speed(2) = 15 'rodog speed
+speed(3) = 7 'donald speed
+speed(4) = 5 ' fiero speed
 CLS , _RGB(0, 0, 0)
 VIEW PRINT 20 TO 25
 X = 200
@@ -68,36 +62,7 @@ PSTRENGTH = 100
 _PUTIMAGE (0, 0), menu 'places image at upper left corner of window w/o stretching it
 SLEEP
 CLS 0, RGB(0, 0, 0)
-PRINT "SELECT A CHARACTER"
-PRINT "To select a world, use the [RIGHT] and [LEFT] arrow keys"
-PRINT "When you have chosen your character press [SPACE] to continue"
-PRINT "press any key to continue"
-SLEEP
-CLS
-WHILE INKEY$ <> " "
-    theymessedup2:
-    pressed = _KEYHIT
-    IF pressed = 19200 THEN
-        selected2 = selected2 - 1
-        IF selected2 = -1 THEN selected2 = 4
-    END IF
-    IF pressed = 19712 THEN
-        selected2 = selected2 + 1
-        IF selected2 = 5 THEN selected2 = 0
-    END IF
-    PRINT "Current character: " + char$(selected2)
-    IF char$(selected2) = "rickpat" THEN _PUTIMAGE (120, 40), RickPat
-    IF char$(selected2) = "porple" THEN _PUTIMAGE (120, 40), porple
-    IF char$(selected2) = "rodog" THEN _PUTIMAGE (120, 40), rodog
-    IF char$(selected2) = "donald" THEN _PUTIMAGE (120, 40), donald
-    IF char$(selected2) = "fiero" THEN _PUTIMAGE (120, 40), fiero
-
-    _DELAY 0.1
-    CLS
-WEND
-PRINT "you have chosen: " + char$(selected2)
-INPUT "do you want to change? (y/n) ", answr$
-IF answr$ = "y" THEN GOTO theymessedup2
+selected2 = 1
 FOR i = 1 TO 5
     wanderX(i) = INT(RND * 630) + 1
     wanderY(i) = INT(RND * 470) + 1
@@ -106,6 +71,12 @@ FOR i = 1 TO 5
     bushX(i) = INT(RND * (640 - 50)) + 1
     bushY(i) = INT(RND * (480 - 50)) + 1
 NEXT i
+FOR i = 1 TO 5
+    buttonX(i) = INT(RND * (640 - 50)) + 1
+    buttonY(i) = INT(RND * (480 - 50)) + 1
+NEXT i
+unlock1 = 0
+stage = 1
 msg = 5
 count = 0
 facing$ = "right"
@@ -163,13 +134,12 @@ WHILE KEY$ <> ""
         _PUTIMAGE (0, 0), station
         count = 0
     END IF
-    FOR i = 1 TO 10
+    FOR i = 1 TO 5
         _PUTIMAGE (wanderX(i), wanderY(i)), wander
         IF X > wanderX(i) - 30 AND X < wanderX(i) + 30 AND Y > wanderY(i) - 30 AND Y < wanderY(i) + 30 THEN
-            msg = i
+            msg = i - 1
         END IF
     NEXT i
-
     pressed = _KEYHIT
     IF pressed = 18432 THEN
         Y = Y - speed(selected2)
@@ -187,7 +157,6 @@ WHILE KEY$ <> ""
         X = X + speed(selected2)
         facing$ = "right"
     END IF
-    _PUTIMAGE (320, 240), button
     IF facing$ = "left" THEN
         IF char$(selected2) = "rickpat" THEN _PUTIMAGE (X, Y), RickPatL
         IF char$(selected2) = "porple" THEN _PUTIMAGE (X, Y), porpleL
@@ -208,15 +177,39 @@ WHILE KEY$ <> ""
     IF msg = 3 THEN _PUTIMAGE (0, 480), msg3
     IF msg = 4 THEN _PUTIMAGE (0, 480), msg4
     IF msg = 5 THEN _PUTIMAGE (0, 480), msg5
+    IF msg = 6 THEN _PUTIMAGE (0, 480), msg6
     IF count = 3 OR count = 1 THEN
         FOR i = 1 TO 10
             _PUTIMAGE (bushX(i), bushY(i)), bush
         NEXT i
     END IF
+    IF count = 1 AND stage <= 5 THEN
+        _PUTIMAGE (buttonX(stage), buttonY(stage)), button
+        IF X > buttonX(stage) - 10 AND X < buttonX(stage) + 10 AND Y > buttonY(stage) - 10 AND Y < buttonY(stage) + 10 THEN
+            stage = stage + 1
+        END IF
+    END IF
+    IF count = 1 AND stage > 5 THEN
+        unlock1 = 1
+    END IF
+    IF unlock1 = 1 THEN
+        msg = 6
+        charswap = 1
+        unlock1 = 0
+    END IF
+    IF charswap >= 1 THEN
+        IF pressed = 97 THEN
+            selected2 = selected2 - 1
+        END IF
+        IF pressed = 100 THEN
+            selected2 = selected2 + 1
+        END IF
+        IF selected2 < 1 THEN selected2 = charswap + 1
+        IF selected2 > charswap + 1 THEN selected2 = 1
 
+    END IF
     _DELAY 0.1
 WEND
-
 
 
 
