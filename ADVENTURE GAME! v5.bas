@@ -2,6 +2,7 @@ SCREEN 12
 ' flower 1
 x = 200
 y = 200
+hold = "none"
 FOR i = 1 TO 10
     a = 10 * i
     'da flower petals
@@ -123,6 +124,66 @@ WHILE KEY$ <> ""
         IF x > Ex - 10 AND x < Ex + 10 AND y > Ey - 10 AND y < Ey + 10 THEN PRINT "hit": E1Health = E1Health - att(selected2)
 
     END IF
+                                                                                                        'IN PROGRESS BELOW
+                                                                                                        IF count = 4 THEN
+        IF hold$ = "none" THEN
+            _PUTIMAGE (200, 400), bowu
+            IF x = 200 AND y = 400 THEN hold$ = "bow"
+        END IF
+        IF hold$ = "bow" THEN
+            IF facing$ = "up" THEN _PUTIMAGE (x + 5, y - 5), bowu
+            IF facing$ = "down" THEN _PUTIMAGE (x - 5, y + 5), bowd
+            IF facing$ = "left" THEN _PUTIMAGE (x - 5, y - 5), bowl
+            IF facing$ = "right" THEN _PUTIMAGE (x + 5, y + 5), bowr                                                                                                                        
+            IF pressed = 32 THEN
+                IF facing$ = "up" THEN
+                    FOR i = 1 TO 30
+                        arrowx = x
+                        arrowy = y - (i * 20)
+                        _PUTIMAGE (0, 0), k
+                        _PUTIMAGE (x, y), charU
+                        _PUTIMAGE (x + 5, y - 5), bowu
+                        _PUTIMAGE (arrowx, arrowy), arrowu
+                        _DELAY 0.1
+                    NEXT i
+                END IF
+                IF facing$ = "down" THEN
+                    FOR i = 1 TO 30
+                        arrowx = x
+                        arrowy = y + (i * 20)
+                        _PUTIMAGE (0, 0), k
+                        _PUTIMAGE (x, y), charD
+                        _PUTIMAGE (x - 5, y + 5), bowd
+                        _PUTIMAGE (arrowx, arrowy), arrowd
+                        _DELAY 0.1
+                    NEXT i
+                END IF
+                IF facing$ = "left" THEN
+                    FOR i = 1 TO 30
+                        arrowx = x - (i * 20)
+                        arrowy = y
+                        _PUTIMAGE (0, 0), k
+                        _PUTIMAGE (x, y), charL
+                        _PUTIMAGE (x - 5, y - 5), bowl
+                        _PUTIMAGE (arrowx, arrowy), arrowl
+                        _DELAY 0.1
+                    NEXT i
+                END IF
+                IF facing$ = "right" THEN
+                    FOR i = 1 TO 30
+                        arrowx = x + (i * 20)
+                        arrowy = y
+                        _PUTIMAGE (0, 0), k
+                        _PUTIMAGE (x, y), charR
+                        _PUTIMAGE (x + 5, y + 5), bowr
+                        _PUTIMAGE (arrowx, arrowy), arrowr
+                        _DELAY 0.1
+                    NEXT i
+                END IF
+            END IF
+        END IF
+    END IF
+                                                                                               ' IN PROGRESS ABOVE                                                                                    
     IF E1Health < 0 THEN unlock2 = 1: E1Health = 0
     IF unlock2 = 1 THEN msgNum = 6: charswap = 2: unlock2 = 0
     _DELAY 0.1
