@@ -1,0 +1,12 @@
+menu: PRINT "1. Create new save."
+PRINT "2. Call last save."
+INPUT choice
+IF choice <> 1 AND choice <> 2 THEN GOTO menu
+IF choice = 1 THEN
+    x = 200: y = 200: selected2 = 1: count = 1
+END IF
+IF choice = 2 THEN
+    OPEN "save.txt" FOR OUTPUT AS #1
+    INPUT #1, selected2, x, y, count
+    CLOSE #1
+END IF
