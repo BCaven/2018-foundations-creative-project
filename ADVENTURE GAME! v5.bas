@@ -2,6 +2,10 @@ SCREEN 12
 ' flower 1
 x = 200
 y = 200
+target1 = 0
+target2 = 0
+target3 = 0
+target4 = 0
 hold = "none"
 FOR i = 1 TO 10
     a = 10 * i
@@ -45,7 +49,7 @@ plains = _LOADIMAGE("plains.png"): desert = _LOADIMAGE("desert.png"): marsh = _L
 ' Characters
 RickPat = _LOADIMAGE("rickpat.png"): rodog = _LOADIMAGE("rodog.png"): donald = _LOADIMAGE("donald.png"): fiero = _LOADIMAGE("fiero.png"): porple = _LOADIMAGE("porple.png"): RickPatL = _LOADIMAGE("rickpatL.png"): rodogL = _LOADIMAGE("rodogL.png"): donaldL = _LOADIMAGE("donaldL.png"): fieroL = _LOADIMAGE("FieroTest.png"): porpleL = _LOADIMAGE("porpleL.png"): RickPatR = _LOADIMAGE("rickpatR.png"): rodogR = _LOADIMAGE("rodogR.png"): donaldR = _LOADIMAGE("donaldR.png"): fieroR = _LOADIMAGE("FieroTest.png"): porpleR = _LOADIMAGE("porpleR.png")
 ' Messages
-msg(0) = _LOADIMAGE("msg0.png"): msg(1) = _LOADIMAGE("msg1.png"): msg(2) = _LOADIMAGE("msg2.png"): msg(3) = _LOADIMAGE("msg3.png"): msg(4) = _LOADIMAGE("msg4.png"): msg(5) = _LOADIMAGE("msg5.png"): msg(6) = _LOADIMAGE("msg6.png"): bush = _LOADIMAGE("bush.png"): wander = _LOADIMAGE("Wanderer.png")
+msg(0) = _LOADIMAGE("msg0.png"): msg(1) = _LOADIMAGE("msg1.png"): msg(2) = _LOADIMAGE("msg2.png"): msg(3) = _LOADIMAGE("msg3.png"): msg(4) = _LOADIMAGE("msg4.png"): msg(5) = _LOADIMAGE("msg5.png"): msg(6) = _LOADIMAGE("msg6.png"): bush = _LOADIMAGE("bush.png"): wander = _LOADIMAGE("Wanderer.png"): target = _LOADIMAGE("target.png")
 charL(4) = RickPatL: charL(0) = porpleL: charL(1) = rodogL: charL(2) = donaldL: charL(3) = fieroL: charR(4) = RickPatR: charR(0) = porpleR: charR(1) = rodogR: charR(2) = donaldR: charR(3) = fieroR: speed(4) = 2: speed(0) = 10: speed(1) = 15: speed(2) = 7: speed(3) = 5
 att(4) = 41: att(0) = 11: att(1) = 16: att(2) = 21: att(3) = 31
 CLS , _RGB(0, 0, 0)
@@ -124,8 +128,13 @@ WHILE KEY$ <> ""
         IF x > Ex - 10 AND x < Ex + 10 AND y > Ey - 10 AND y < Ey + 10 THEN PRINT "hit": E1Health = E1Health - att(selected2)
 
     END IF
-                                                                                                        'IN PROGRESS BELOW
-                                                                                                        IF count = 4 THEN
+                  'IN PROGRESS BELOW
+            IF count = 4 THEN
+																																													if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
+                        _PUTIMAGE (x + 5, y - 5), bowu
         IF hold$ = "none" THEN
             _PUTIMAGE (200, 400), bowu
             IF x = 200 AND y = 400 THEN hold$ = "bow"
@@ -136,47 +145,87 @@ WHILE KEY$ <> ""
             IF facing$ = "left" THEN _PUTIMAGE (x - 5, y - 5), bowl
             IF facing$ = "right" THEN _PUTIMAGE (x + 5, y + 5), bowr                                                                                                                        
             IF pressed = 32 THEN
+                                                                                                                        																		if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
+                        _PUTIMAGE (x + 5, y - 5), bowu
                 IF facing$ = "up" THEN
                     FOR i = 1 TO 30
                         arrowx = x
-                        arrowy = y - (i * 20)
+                        arrowy = y - (i * 20
                         _PUTIMAGE (0, 0), k
                         _PUTIMAGE (x, y), charU
+																																			if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
                         _PUTIMAGE (x + 5, y - 5), bowu
                         _PUTIMAGE (arrowx, arrowy), arrowu
                         _DELAY 0.1
+									IF arrowx = 70 AND arrowy = 70 THEN target1 = 1
+									IF arrowx = 190 AND arrowy = 100 THEN target2 = 1	
+									IF arrowx = 120 AND arrowy = 190 THEN target3 = 1
+									IF arrowx = 430 AND arrowy = 290 THEN target4 = 1
                     NEXT i
                 END IF
                 IF facing$ = "down" THEN
                     FOR i = 1 TO 30
+																							if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
+                        _PUTIMAGE (x + 5, y - 5), bowu
                         arrowx = x
                         arrowy = y + (i * 20)
                         _PUTIMAGE (0, 0), k
                         _PUTIMAGE (x, y), charD
                         _PUTIMAGE (x - 5, y + 5), bowd
                         _PUTIMAGE (arrowx, arrowy), arrowd
+							IF arrowx = 70 AND arrowy = 70 THEN target1 = 1
+									IF arrowx = 190 AND arrowy = 100 THEN target2 = 1	
+									IF arrowx = 120 AND arrowy = 190 THEN target3 = 1
+									IF arrowx = 430 AND arrowy = 290 THEN target4 = 1
                         _DELAY 0.1
                     NEXT i
                 END IF
                 IF facing$ = "left" THEN
                     FOR i = 1 TO 30
+																							if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
+                        _PUTIMAGE (x + 5, y - 5), bowu
                         arrowx = x - (i * 20)
                         arrowy = y
                         _PUTIMAGE (0, 0), k
                         _PUTIMAGE (x, y), charL
                         _PUTIMAGE (x - 5, y - 5), bowl
                         _PUTIMAGE (arrowx, arrowy), arrowl
+							IF arrowx = 70 AND arrowy = 70 THEN target1 = 1
+									IF arrowx = 190 AND arrowy = 100 THEN target2 = 1	
+									IF arrowx = 120 AND arrowy = 190 THEN target3 = 1
+									IF arrowx = 430 AND arrowy = 290 THEN target4 = 1
                         _DELAY 0.1
                     NEXT i
                 END IF
                 IF facing$ = "right" THEN
                     FOR i = 1 TO 30
+																							if target1 = 0 then									_PUTIMAGE(70, 70), target
+																																				if target2 = 0 then              _putimage(190, 100), target
+																																					if target3 = 0 then                                                              _putimage(120, 190), target
+                                                            if target4 = 0 then                                        _putimage(430, 290), target
+                        _PUTIMAGE (x + 5, y - 5), bowu
                         arrowx = x + (i * 20)
                         arrowy = y
                         _PUTIMAGE (0, 0), k
                         _PUTIMAGE (x, y), charR
                         _PUTIMAGE (x + 5, y + 5), bowr
                         _PUTIMAGE (arrowx, arrowy), arrowr
+							IF arrowx = 70 AND arrowy = 70 THEN target1 = 1
+									IF arrowx = 190 AND arrowy = 100 THEN target2 = 1	
+									IF arrowx = 120 AND arrowy = 190 THEN target3 = 1
+									IF arrowx = 430 AND arrowy = 290 THEN target4 = 1
                         _DELAY 0.1
                     NEXT i
                 END IF
