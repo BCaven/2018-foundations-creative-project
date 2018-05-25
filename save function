@@ -1,5 +1,9 @@
+mySave$ = "save1.txt"
+input "do you have a game saved?", gsyn$
+if lcase$(gsyn$) = "y" then input "What is your file name? (include '.txt' on the end) ", mySave$
 IF pressed = 115 THEN
-    OPEN "save" FOR INPUT AS #1
-    INPUT #1, selected2, x, y, count
+    OPEN mySave$ FOR INPUT AS #1
+    INPUT #1, s, X, Y, c
+    selected2 = s: x = X: y = Y: count = c
     close #1
 END IF
