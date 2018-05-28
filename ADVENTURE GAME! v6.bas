@@ -1,3 +1,13 @@
+
+mySave$ = "save1.txt"
+input "do you have a game saved?", gsyn$
+if lcase$(gsyn$) = "y" then input "What is your file name? (include '.txt' on the end) ", mySave$
+
+    OPEN mySave$ FOR INPUT AS #1
+    INPUT #1, s, X, Y, c
+    selected2 = s: x = X: y = Y: count = c
+    close #1
+
 SCREEN 12
 ' flower 1
 x = 200
@@ -53,7 +63,8 @@ msg(0) = _LOADIMAGE("msg0.png"): msg(1) = _LOADIMAGE("msg1.png"): msg(2) = _LOAD
 charL(4) = RickPatL: charL(0) = porpleL: charL(1) = rodogL: charL(2) = donaldL: charL(3) = fieroL: charR(4) = RickPatR: charR(0) = porpleR: charR(1) = rodogR: charR(2) = donaldR: charR(3) = fieroR: speed(4) = 2: speed(0) = 10: speed(1) = 15: speed(2) = 7: speed(3) = 5
 att(4) = 41: att(0) = 11: att(1) = 16: att(2) = 21: att(3) = 31
 CLS , _RGB(0, 0, 0)
-x = 200: y = 200: clicked = 0: PHEALTH = 100: selected2 = 0: Ex = 200: Ey = 200
+if x = null then x = 200: y = 200: clicked = 0: PHEALTH = 100: selected2 = 0
+Ex = 200: Ey = 200
 _PUTIMAGE (0, 0), menu 'places image at upper left corner of window w/o stretching it
 SLEEP
 FOR i = 1 TO 5
@@ -236,6 +247,12 @@ WHILE KEY$ <> ""
     IF E1Health < 0 THEN unlock2 = 1: E1Health = 0
     IF unlock2 = 1 THEN msgNum = 6: charswap = 2: unlock2 = 0
     _DELAY 0.1
+    IF pressed = 115 THEN
+    OPEN mySave$ FOR INPUT AS #1
+    INPUT #1, s, X, Y, c
+    selected2 = s: x = X: y = Y: count = c
+    close #1
+END IF
 WEND
 
 
