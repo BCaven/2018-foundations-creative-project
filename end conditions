@@ -1,0 +1,11 @@
+IF count = 3 AND x < 410 AND x > 290 AND y < 450 AND y > 380 THEN
+    IF charswap < 3 THEN
+
+    END IF
+    IF charswap = 3 THEN
+        fin = _LOADIMAGE("end.png")
+        CLS
+        _DELAY 3
+        _PUTIMAGE (0, 0), fin
+    END IF
+END IF
